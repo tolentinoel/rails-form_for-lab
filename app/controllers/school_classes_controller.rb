@@ -4,7 +4,7 @@ class SchoolClassesController < ApplicationController
     end
 
     def show
-        @school_class = SchoolClass.find(params[:id])
+        find_class
     end
 
     def new
@@ -20,13 +20,18 @@ class SchoolClassesController < ApplicationController
     end
 
     def edit
-        @school_class = SchoolClass.find(params[:id])
+        find_class
     end
 
     def update
-    # @article = Article.find(params[:id])
-    # @article.update(title: params[:article][:title], description: params[:article][:description])
+        find_class
+        @school_class.update(title: params[:title], room_number: params[:room_number])
     # redirect_to article_path(@article)
     end
 
+    private
+
+    def find_class
+        @school_class = SchoolClass.find(params[:id])
+    end
 end
