@@ -1,8 +1,5 @@
-class StudentController < ApplicationController
+class StudentsController < ApplicationController
 
-    def index
-        @students = Student.all
-    end
 
     def show
         find_student
@@ -13,8 +10,7 @@ class StudentController < ApplicationController
     end
 
     def create
-        @student = Student.new
-        @student.save
+        @student = Student.create(student_params)
         redirect_to student_path(@student)
     end
 
@@ -24,7 +20,7 @@ class StudentController < ApplicationController
 
     def update
         find_student
-        @student.update(first_name: params[:first_name], last_name: params[:last_name])
+        @student.update(student_params)
         redirect_to student_path(@student)
     end
 
@@ -34,4 +30,7 @@ class StudentController < ApplicationController
         @student = Student.find(params[:id])
     end
 
+    def student_params
+        params.require(:student).permit(:first_name, :last_name)
+    end
 end

@@ -1,4 +1,5 @@
 class SchoolClassesController < ApplicationController
+
     def index
         @school_classes = SchoolClass.all
     end
@@ -12,11 +13,8 @@ class SchoolClassesController < ApplicationController
     end
 
     def create
-        # @school_class = SchoolClass.new
-        # @school_class.title = params[:title]
-        # @school_class.description = params[:description]
-        # @school_class.save
-        # redirect_to school_class_path(@school_class)
+        @school_class = SchoolClass.create(class_params)
+        redirect_to school_class_path(@school_class)
     end
 
     def edit
@@ -25,13 +23,17 @@ class SchoolClassesController < ApplicationController
 
     def update
         find_class
-        @school_class.update(title: params[:title], room_number: params[:room_number])
-    # redirect_to article_path(@article)
+        @school_class.update(class_params)
+        redirect_to school_class_path(@school_class)
     end
 
     private
 
     def find_class
         @school_class = SchoolClass.find(params[:id])
+    end
+
+    def class_params
+        params.require(:school_class).permit(:title, :room_number)
     end
 end
